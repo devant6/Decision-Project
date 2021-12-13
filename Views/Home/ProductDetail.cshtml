@@ -1,0 +1,24 @@
+@model Packt.Shared.Product
+@{
+  ViewData["Title"] = "Option Detail - " + Model.ProductName;
+}
+<h2>Option Detail</h2>
+<hr />
+<div>
+  <dl class="dl-horizontal">
+    <dt>Option Id</dt>
+    <dd>@Model.ProductID</dd>
+    <dt>Option Name</dt>
+    <dd>@Model.ProductName</dd>
+    <!--<dt>Category ID</dt>
+    <dd>@Model.CategoryID</dd>-->
+    <dt>Total Weight</dt>
+    <dd>@Model.UnitPrice.Value.ToString("")</dd>
+    <dt>Pros:</dt>
+    <dd>@Model.Pros</dd> <!--I added these to the detail page, planning on making them clickable possibly.-->
+    <dt>Cons:</dt> 
+    <dd>@Model.Cons</dd>
+    <!--<dt>Units In Stock</dt>
+    <dd>@Model.UnitsInStock</dd>-->
+  </dl>
+</div>

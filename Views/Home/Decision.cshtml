@@ -1,0 +1,53 @@
+@model Packt.Shared.Product
+@{
+  ViewData["Title"] = "Decision - " + Model.ProductName;
+}
+<h2>Decision</h2>
+<hr />
+<div>
+  <dl class="dl-horizontal">
+    <dd>@Model.ProductName</dd>
+    <dt>This option's weight is @Model.UnitPrice.Value</dt>
+    <dt>This option's Pros are:</dt>
+    <dd>@Model.Pros</dd> 
+    <dt>And it's Cons are:</dt> 
+    <dd>@Model.Cons</dd>
+    @if(@Model.UnitPrice.Value > 0){
+      <dt>This is a good option according to its weight being positive.</dt>
+    }
+    @if(@Model.UnitPrice.Value < 0){
+      <dt>This is a bad option according to its weight being negative.</dt>
+    }
+    @if(@Model.UnitPrice.Value == 0){
+      <dt>This is a neutral option according to its weight being zero.</dt>
+    }
+  </dl>@*
+  <dl class="dl-horizontal">
+      <dd>@Model2.ProductName</dd>
+      <dt>This option's weight is @Model2.UnitPrice.Value</dt>
+      <dt>This option's Pros are:</dt>
+      <dd>@Model2.Pros</dd> 
+      <dt>And it's Cons are:</dt> 
+      <dd>@Model2.Cons</dd>
+      @if(@Model2.UnitPrice.Value > 0){
+        <dt>This is a good option according to its weight being positive.</dt> 
+      }
+      @if(@Model2.UnitPrice.Value < 0){
+        <dt>This is a bad option according to its weight being negative. If I got both decisions working, this would be the second model for it.</dt>
+      }
+      @if(@Model2.UnitPrice.Value == 0){
+        <dt>This is a neutral option according to its weight being zero.</dt>
+      }
+    </dl>
+  
+  @if(@Model.UnitPrice.Value > @Model2.UnitPrice.Value){
+    <dt>@Model.ProductName is the better decision</dt>
+  }
+  @if(@Model.UnitPrice.Value < @Model2.UnitPrice.Value){   
+    <dt>@Model2.ProductName is the better decision</dt>
+  }
+  @if(@Model.UnitPrice.Value == @Model2.UnitPrice.Value){
+  <dt>It is a tie!</dt>
+}
+</div> *@
+   
