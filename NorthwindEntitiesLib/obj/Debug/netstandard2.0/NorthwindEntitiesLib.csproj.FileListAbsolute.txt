@@ -1,0 +1,10 @@
+C:\Users\devan\Downloads\cs8dotnetcore3-master\cs8dotnetcore3-master\PracticalApps\NorthwindEntitiesLib\bin\Debug\netstandard2.0\NorthwindEntitiesLib.deps.json
+C:\Users\devan\Downloads\cs8dotnetcore3-master\cs8dotnetcore3-master\PracticalApps\NorthwindEntitiesLib\bin\Debug\netstandard2.0\NorthwindEntitiesLib.dll
+C:\Users\devan\Downloads\cs8dotnetcore3-master\cs8dotnetcore3-master\PracticalApps\NorthwindEntitiesLib\bin\Debug\netstandard2.0\NorthwindEntitiesLib.pdb
+C:\Users\devan\Downloads\cs8dotnetcore3-master\cs8dotnetcore3-master\PracticalApps\NorthwindEntitiesLib\obj\Debug\netstandard2.0\NorthwindEntitiesLib.AssemblyInfoInputs.cache
+C:\Users\devan\Downloads\cs8dotnetcore3-master\cs8dotnetcore3-master\PracticalApps\NorthwindEntitiesLib\obj\Debug\netstandard2.0\NorthwindEntitiesLib.AssemblyInfo.cs
+C:\Users\devan\Downloads\cs8dotnetcore3-master\cs8dotnetcore3-master\PracticalApps\NorthwindEntitiesLib\obj\Debug\netstandard2.0\NorthwindEntitiesLib.csproj.CoreCompileInputs.cache
+C:\Users\devan\Downloads\cs8dotnetcore3-master\cs8dotnetcore3-master\PracticalApps\NorthwindEntitiesLib\obj\Debug\netstandard2.0\NorthwindEntitiesLib.dll
+C:\Users\devan\Downloads\cs8dotnetcore3-master\cs8dotnetcore3-master\PracticalApps\NorthwindEntitiesLib\obj\Debug\netstandard2.0\NorthwindEntitiesLib.pdb
+C:\Users\devan\Downloads\cs8dotnetcore3-master\cs8dotnetcore3-master\PracticalApps\NorthwindEntitiesLib\obj\Debug\netstandard2.0\NorthwindEntitiesLib.csproj.AssemblyReference.cache
+C:\Users\devan\Downloads\cs8dotnetcore3-master\cs8dotnetcore3-master\PracticalApps\NorthwindEntitiesLib\obj\Debug\netstandard2.0\NorthwindEntitiesLib.GeneratedMSBuildEditorConfig.editorconfig
