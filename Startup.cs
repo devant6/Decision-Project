@@ -1,92 +1,96 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
-using NorthwindMvc.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Packt.Shared;
+using Piranha;
+using Piranha.AspNetCore.Identity.SQLite;
+using Piranha.AttributeBuilder;
+using Piranha.Data.EF.SQLite;
+using Piranha.Manager.Editor;
 using System.IO;
-using System.Net.Http.Headers;
 
-namespace NorthwindMvc
+namespace NorthwindCms
 {
   public class Startup
   {
+    /// <summary>
+    /// The application config.
+    /// </summary>
+    public IConfiguration Configuration { get; set; }
+
+    /// <summary>
+    /// Default constructor.
+    /// </summary>
+    /// <param name="configuration">The current configuration</param>
     public Startup(IConfiguration configuration)
     {
       Configuration = configuration;
     }
 
-    public IConfiguration Configuration { get; }
-
     // This method gets called by the runtime. Use this method to add services to the container.
+    // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
     {
+      // Service setup
+      services.AddPiranha(options =>
+      {
+        options.UseFileStorage();
+        options.UseImageSharp();
+        options.UseManager();
+        options.UseTinyMCE();
+        options.UseMemoryCache();
+        options.UseEF<SQLiteDb>(db =>
+          db.UseSqlite(Configuration.GetConnectionString("piranha")));
+        options.UseIdentityWithSeed<IdentitySQLiteDb>(db =>
+          db.UseSqlite(Configuration.GetConnectionString("piranha")));
+      });
+
       string databasePath = Path.Combine("..", "Northwind.db");
 
-      services.AddDbContext<Northwind>(options =>
+      services.AddDbContext<Packt.Shared.Northwind>(options =>
         options.UseSqlite($"Data Source={databasePath}"));
-
-      services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlite(
-          Configuration.GetConnectionString("DefaultConnection")));
-
-      services.AddDefaultIdentity<IdentityUser>(
-        options => options.SignIn.RequireConfirmedAccount = true)
-        .AddEntityFrameworkStores<ApplicationDbContext>();
-
-      services.AddControllersWithViews();
-      services.AddRazorPages();
-
-      services.AddHttpClient(name: "NorthwindService",
-        configureClient: options =>
-        {
-          options.BaseAddress = new Uri("https://localhost:5001/");
-          
-          options.DefaultRequestHeaders.Accept.Add(
-            new MediaTypeWithQualityHeaderValue("application/json", 1.0));
-        });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApi api)
     {
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
-        app.UseDatabaseErrorPage();
       }
-      else
+
+      // Initialize Piranha
+      App.Init(api);
+
+      // register custom block
+      App.Blocks.Register<Models.Blocks.YouTubeBlock>();
+
+      // register GIFs as a media type
+      App.MediaTypes.Images.Add(".gif", "image/gif");
+
+      // Configure cache level
+      App.CacheLevel = Piranha.Cache.CacheLevel.Basic;
+
+      // Build content types
+      new ContentTypeBuilder(api)
+          .AddAssembly(typeof(Startup).Assembly)
+          .Build()
+          .DeleteOrphans();
+
+      // Configure Tiny MCE
+      EditorConfig.FromFile("editorconfig.json");
+
+      // Middleware setup
+      app.UsePiranha(options =>
       {
-        app.UseExceptionHandler("/Home/Error");
-        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-        app.UseHsts();
-      }
+        options.UseManager();
+        options.UseTinyMCE();
+        options.UseIdentity();
+      });
 
       app.UseHttpsRedirection();
-      app.UseStaticFiles();
-
-      app.UseRouting();
-
-      app.UseAuthentication();
-      app.UseAuthorization();
-
-      app.UseEndpoints(endpoints =>
-      {
-        endpoints.MapControllerRoute(
-          name: "default",
-          pattern: "{controller=Home}/{action=Index}/{id?}");
-
-        endpoints.MapRazorPages();
-      });
     }
   }
 }
